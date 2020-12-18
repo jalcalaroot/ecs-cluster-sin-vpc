@@ -209,13 +209,13 @@ resource "aws_security_group" "cluster-sg" {
 #---------------------------------------------------------------------------
 resource "aws_launch_configuration" "launch-configuration" {
     name                        = "${var.ecs_cluster}-launch-configuration"
-    image_id                    = "ami-00afc256a955c31b5"
+    image_id                    = "${var.ami_id}"
     instance_type               = "${var.instance_type}"
     iam_instance_profile        = "${aws_iam_instance_profile.ecs-instance-profile.arn}"
 
     root_block_device {
       volume_type = "gp2"
-      volume_size = 100
+      volume_size = 30
       delete_on_termination = true
     }
 
@@ -409,7 +409,7 @@ resource "aws_ecs_task_definition" "nginx" {
     "logDriver": "awslogs",
       "options": {
         "awslogs-group": "${var.ecs_cluster}/ecs/nginx",
-        "awslogs-region": "us-east-1",
+        "awslogs-region": "${var.region}",
         "awslogs-stream-prefix": "ecs"
       }
     }
@@ -421,4 +421,3 @@ EOF
 resource "aws_cloudwatch_log_group" "nginx" {
   name = "${var.ecs_cluster}/ecs/nginx"
 }
-#-------------------------------------------------------

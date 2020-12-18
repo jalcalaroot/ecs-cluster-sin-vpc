@@ -1,16 +1,19 @@
 #ingresar credenciales
 variable "access_key" {}
 variable "secret_key" {}
+variable "region" {}
 provider "aws" {
   access_key = "${var.access_key}"
   secret_key = "${var.secret_key}"
   region     = "${var.region}"
 }
 
-variable "region" {
+
+variable "ami_id" {
   type        = "string"
-  description = "indicar el nombre del cluster"
+  description = "AMI ECS optimized amazon-linux-2 en la region ejemplo us-east-1= ami-0f06fc190dd71269e eu-west-1= ami-0bae98979a66f39dc"
 }
+
 
 
 variable "ecs_cluster" {
